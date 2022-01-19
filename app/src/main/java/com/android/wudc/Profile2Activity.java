@@ -3,13 +3,18 @@ package com.android.wudc;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Profile2Activity extends AppCompatActivity {
+    private final int REQUEST_CODE = 200;
+    private CircleImageView profileImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +25,7 @@ public class Profile2Activity extends AppCompatActivity {
         ImageButton false1 = findViewById(R.id.false1);
         ImageButton true1 = findViewById(R.id.true1);
         ImageButton tab2 = findViewById(R.id.tab2);
-
-        //profile에서 이름 받아오기
-        Intent inIntent = getIntent();
-        String Name = inIntent.getStringExtra("Name");
-        name.setText(Name);
+        profileImage = findViewById(R.id.profileImage);
 
 
         false1.setOnClickListener(new View.OnClickListener() {
@@ -37,10 +38,21 @@ public class Profile2Activity extends AppCompatActivity {
         true1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent outIntent = new Intent(getApplicationContext(), ProfileActivity.class);
-                outIntent.putExtra("Name",name.toString());
-                setResult(RESULT_OK,outIntent);
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                intent.putExtra("Data",name.getText().toString());
+                startActivity(intent);
+                finish();
                 Toast.makeText(getApplicationContext(),"수정 완료!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        profileImage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        "image/*");
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
 /*
@@ -52,5 +64,14 @@ public class Profile2Activity extends AppCompatActivity {
                 finish();
             }
         });*/
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            Uri selectedImageUri = data.getData();
+            profileImage.setImageURI(selectedImageUri);
+        }
     }
 }

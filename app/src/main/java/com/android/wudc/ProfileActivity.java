@@ -13,29 +13,32 @@ import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileActivity extends AppCompatActivity {
 
-    public TextView name=findViewById(R.id.name);
+public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        TextView name = findViewById(R.id.name);
         ImageButton rename= findViewById(R.id.rename);
 
-        //login에서 이름 받아오기
-        Intent inIntent = getIntent();
+
+        /*Intent inIntent = getIntent();
         String Name = inIntent.getStringExtra("Name");
-        name.setText(Name);
+        name.setText(Name);*/
+
+        Intent inIntent = getIntent();
+        String Data = inIntent.getStringExtra("Data");
+        name.setText(Data);
 
         rename.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //profile2로 이름 보내기
+                //profile2로 화면전환
                 Intent intent = new Intent(ProfileActivity.this, Profile2Activity.class);
-                intent.putExtra("Name",name.getText().toString());
-                startActivityForResult(intent,0);
+                startActivity(intent);
             }
         });
         /*
@@ -55,22 +58,41 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        /*tab2.setOnClickListener(new View.OnClickListener() {
+        ImageButton tab1 = findViewById(R.id.tab1);
+        tab1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RecordActivity.class);
+                startActivity(intent); // tab1 액티비티 호출
             }
-        });*/
+        });
 
-    }
+        ImageButton tab2 = findViewById(R.id.tab2);
+        tab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent); // tab1 액티비티 호출
+            }
+        });
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            String Name = data.getStringExtra("Name");
-            name.setText(Name);
-        }
+        ImageButton tab3 = findViewById(R.id.tab3);
+        tab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),SettingActivity.class);
+                startActivity(intent); // tab1 액티비티 호출
+            }
+        });
+
+        ImageButton tab4 = findViewById(R.id.tab4);
+        tab4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent); // tab1 액티비티 호출
+            }
+        });
+
     }
 }
