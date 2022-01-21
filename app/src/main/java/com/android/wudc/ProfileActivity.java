@@ -3,7 +3,9 @@ package com.android.wudc;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -23,15 +25,22 @@ public class ProfileActivity extends AppCompatActivity {
 
         TextView name = findViewById(R.id.name);
         ImageButton rename= findViewById(R.id.rename);
-
-
-        /*Intent inIntent = getIntent();
-        String Name = inIntent.getStringExtra("Name");
-        name.setText(Name);*/
-
+/*
         Intent inIntent = getIntent();
-        String Data = inIntent.getStringExtra("Data");
-        name.setText(Data);
+        String Data = inIntent.getStringExtra("Data");*/
+
+        SharedPreferences auto = getSharedPreferences("NAME", Activity.MODE_PRIVATE);
+        String id = auto.getString("inputId", null);
+        name.setText(id);
+/*
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        String Data = bundle.getString("Data");
+        name.setText(Data);*/
+
+
+
+
 
         rename.setOnClickListener(new View.OnClickListener() {
             @Override

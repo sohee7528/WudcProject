@@ -38,10 +38,13 @@ public class Profile2Activity extends AppCompatActivity {
         true1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                Bundle bundle = new Bundle();
+                String Data = name.getText().toString();
+                bundle.putString("Data",Data);
+                /*Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                 intent.putExtra("Data",name.getText().toString());
                 startActivity(intent);
-                finish();
+                finish();*/
                 Toast.makeText(getApplicationContext(),"수정 완료!", Toast.LENGTH_SHORT).show();
             }
         });

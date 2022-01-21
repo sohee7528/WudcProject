@@ -27,16 +27,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/buttoncancel" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="270dp"
+    <TextView
+        android:id="@+id/view_contest"
+        android:layout_width="191dp"
         android:layout_height="315dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="1414dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_cancel3"
+        android:layout_marginStart="178dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="176dp"
+        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_contest2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

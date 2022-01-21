@@ -1,18 +1,41 @@
 package com.android.wudc;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    String dbName = "Record.db";
+    int dbVersion = 1;
+    RecordDBHelper dbHelper;
+    SQLiteDatabase db;
+    String sql, data;
+    ArrayList<String> Data = new ArrayList<String>();
+    ArrayAdapter<String> Adapter;
+
     CalendarView calendar;
+    ListView listview;
+    TextView textview;
     int selectYear, selectMonth, selectDay;
+    TextView textview01, textview02, textview03, textview04;
 
 
     @Override
@@ -22,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton addbtn = findViewById(R.id.addbtn);
         calendar = findViewById(R.id.calendar);
+        textview = findViewById(R.id.textView6);
+        /*textview01 = findViewById(R.id.textview1);
+        textview02 = findViewById(R.id.textview2);
+        textview03 = findViewById(R.id.textview3);
+        textview04 = findViewById(R.id.textview4);*/
+
 
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -32,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
                 selectDay = dayOfMonth;
 
                 String date = selectYear + "년 " + (month + 1) + "월 " + dayOfMonth + "일";
+
+                //dbHelper 선언 및 db 설정
+                dbHelper = new RecordDBHelper(MainActivity.this, 1);
+                db=dbHelper.getReadableDatabase();
+                textview.setText(dbHelper.getResult());
+
 
                 addbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -46,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
 
         ImageButton tab1 = findViewById(R.id.tab1);
         tab1.setOnClickListener(new View.OnClickListener() {
@@ -82,5 +119,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent); // tab1 액티비티 호출
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK) {
+            String title01 = data.getExtras().getString("title1");
+            textview01.setText(title01);
+            String title02 = data.getExtras().getString("title2");
+            textview02.setText(title02);
+            String title03 = data.getExtras().getString("title3");
+            textview03.setText(title03);
+            String title04 = data.getExtras().getString("title4");
+            textview04.setText(title04);
+        }
     }
 }

@@ -12,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.android.wudc.R;
-import com.android.wudc.RecordActivity;
 
 import java.util.Date;
 import java.util.List;
@@ -27,6 +25,9 @@ import static java.sql.DriverManager.println;
 //공모전 활동 기록 화면
 public class RecordcontestActivity extends AppCompatActivity {
     ImageButton btn_cancel;
+    TextView view_contest;
+    RecordDBHelper dbHelper;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,33 +36,21 @@ public class RecordcontestActivity extends AppCompatActivity {
 
         //사용할 id 연결
         btn_cancel = findViewById(R.id.btn_cancel3);
+        view_contest = findViewById(R.id.view_contest);
+
+        dbHelper = new RecordDBHelper(RecordcontestActivity.this, 1);
+        db=dbHelper.getReadableDatabase();
+        view_contest.setText(dbHelper.getResult_contest());
 
         //취소 버튼 누르면
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(), RecordActivity.class);
+                Intent intent = new Intent(getApplicationContext(),RecordActivity.class);
                 startActivity(intent);
             }
         });
 
-        //DB 사용
-        //SQLiteOpenHelper dbHelper;
-        //DB 불러오기
-        //SQLiteDatabase db = dbHelper.getReadableDatabase();
-        //Cursor cursor = db.query("record",null,null,null,null,null,null);
-
-    }
-    // Load Database
-    public void initLoadPersonDatabase() {
-
-        com.example.wudc.DatabaseHelper databaseHelper = new com.example.wudc.DatabaseHelper(getApplicationContext());
-        databaseHelper.OpenDatabaseFile();
-
-        List personList = databaseHelper.getTableData();
-        Log.e("test", String.valueOf(personList.size()));
-
-        databaseHelper.close();
 
     }
 

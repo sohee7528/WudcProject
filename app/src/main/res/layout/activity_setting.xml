@@ -9,6 +9,7 @@
     tools:context=".MainActivity" >
 
     <TextView
+        android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -18,6 +19,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -27,6 +29,7 @@
 
 
     <ImageView
+        android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="210dp"
         android:src="@drawable/phone1" />
@@ -64,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/malgun"
+            android:fontFamily="@font/munhwa"
             android:text="문체부 쓰기 정체"
             android:textColor="#292727"
             android:textSize="20dp" />

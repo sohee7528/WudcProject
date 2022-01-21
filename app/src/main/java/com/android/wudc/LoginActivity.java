@@ -1,11 +1,17 @@
 package com.android.wudc;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,8 +22,6 @@ public class LoginActivity extends AppCompatActivity {
     private final int REQUEST_CODE = 200;
     private CircleImageView profileImage;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,25 +31,29 @@ public class LoginActivity extends AppCompatActivity {
         ImageButton true1 = findViewById(R.id.true1);
         EditText name = findViewById(R.id.name);
 
-        //String nameLength = name.getText().toString();
 
         true1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                /*
-                if(nameLength.length() <= 0){
-                    Toast.makeText(getApplicationContext(),"닉네임을 입력하세요", Toast.LENGTH_SHORT).show();
-                }else {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    //intent.putExtra("Name",name.getText().toString());
+                if(name.getText().toString() .equals("")){
+                    Toast.makeText(getApplicationContext(),"닉네임을 입력하세요",Toast.LENGTH_SHORT).show();
+                }else{
+                    SharedPreferences auto = getSharedPreferences("NAME", Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor autoLogin = auto.edit();
+                    autoLogin.putString("inputId", name.getText().toString());
+
+                    autoLogin.commit();
+                    Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                     startActivity(intent);
-                }*/
+
+                    Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent1);
+                }
+
             }
         });
 
-        profileImage.setOnClickListener(new View.OnClickListener(){
+        /*profileImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
@@ -53,10 +61,10 @@ public class LoginActivity extends AppCompatActivity {
                         "image/*");
                 startActivityForResult(intent, REQUEST_CODE);
             }
-        });
+        });*/
 
     }
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK
@@ -64,5 +72,5 @@ public class LoginActivity extends AppCompatActivity {
             Uri selectedImageUri = data.getData();
             profileImage.setImageURI(selectedImageUri);
         }
-    }
+    }*/
 }
